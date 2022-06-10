@@ -1,7 +1,18 @@
 <script setup>
 import { ref } from "vue";
+import useLogout from "@/composables/useLogout";
+import getUser from "@/composables/getUser";
 
 const isMenuOpen = ref(false);
+const { error, logout } = useLogout();
+const { user } = getUser();
+
+const handleLogout = async () => {
+  await logout();
+  if (!error.value) {
+    console.log("logout");
+  }
+};
 </script>
 
 <template>
@@ -14,12 +25,12 @@ const isMenuOpen = ref(false);
       <div class="relative flex grid items-center grid-cols-2 lg:grid-cols-3">
         <ul class="flex items-center hidden space-x-8 lg:flex">
           <li>
-            <a
-              href="/"
+            <router-link
+              :to="{ name: 'Home' }"
               aria-label="Our product"
               title="Our product"
-              class="font-bold text-xl tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
-              >Product</a
+              class="font-bold text-xl tracking-wide transition-colors duration-200 hover:text-teal-accent-400"
+              >Product</router-link
             >
           </li>
         </ul>
@@ -34,7 +45,10 @@ const isMenuOpen = ref(false);
             >Vuelist</span
           >
         </a>
-        <ul class="flex items-center hidden ml-auto space-x-8 lg:flex">
+        <ul
+          v-if="!user"
+          class="flex items-center hidden ml-auto space-x-8 lg:flex"
+        >
           <li>
             <router-link
               :to="{ name: 'Login' }"
@@ -55,6 +69,16 @@ const isMenuOpen = ref(false);
             </router-link>
           </li>
         </ul>
+        <div class="flex items-center hidden ml-auto space-x-8 lg:flex" v-else>
+          <button
+            @click="handleLogout"
+            class="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-blue-400 hover:bg-blue-700 focus:shadow-outline focus:outline-none"
+            aria-label="Sign up"
+            title="Sign up"
+          >
+            Logout
+          </button>
+        </div>
         <!-- Mobile menu -->
         <div class="ml-auto lg:hidden">
           <button
