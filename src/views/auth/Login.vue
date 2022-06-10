@@ -58,7 +58,9 @@ const handleSubmit = async () => {
         />
       </div>
       <div class="flex justify-center items-center">
-        <button class="bg-white px-6" v-if="!isPending">Log in</button>
+        <button class="bg-white px-6 hover:bg-gray-100" v-if="!isPending">
+          Log in
+        </button>
         <div v-else>
           <Spinner />
         </div>

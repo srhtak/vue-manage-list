@@ -30,7 +30,16 @@ const handleLogout = async () => {
               aria-label="Our product"
               title="Our product"
               class="font-bold text-xl tracking-wide transition-colors duration-200 hover:text-teal-accent-400"
-              >Product</router-link
+              >Playlist</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'CreatePlayList' }"
+              aria-label="Create List"
+              title="Create"
+              class="font-bold text-xl tracking-wide transition-colors duration-200 hover:text-teal-accent-400"
+              >Create</router-link
             >
           </li>
         </ul>

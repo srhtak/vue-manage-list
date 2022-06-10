@@ -30,16 +30,7 @@ button, .btn {
   cursor: pointer;
   display: inline-block;
 }
-button:hover, .btn:hover {
-  background: var(--primary);
-  color: white;
-}
-button:disabled {
-  opacity: 0.5;
-  color: var(--primary);
-  background: var(--secondary);
-  cursor: not-allowed;
-}
+
 
 /* forms */
 form {
