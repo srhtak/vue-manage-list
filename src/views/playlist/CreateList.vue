@@ -7,9 +7,10 @@ import getUser from "@/composables/getUser";
 import { timestap } from "@/firebase/config";
 
 const { filePath, url, uploadImage } = useStorage();
-const { error, addDoc, isPending } = useCollection("playlist");
+const { error, addDoc } = useCollection("playlist");
 const { user } = getUser();
 
+const isPending = ref(false);
 const title = ref("");
 const description = ref("");
 const file = ref(null);
@@ -29,6 +30,7 @@ const handleFile = (e) => {
 
 const handleSubmit = async () => {
   if (file.value) {
+    isPending.value = true;
     await uploadImage(file.value);
     await addDoc({
       title: title.value,
@@ -40,6 +42,7 @@ const handleSubmit = async () => {
       songs: [],
       createdAt: timestap(),
     });
+    isPending.value = false;
     if (!error.value) {
       console.log("playlist added");
     }
@@ -47,7 +50,7 @@ const handleSubmit = async () => {
     title.value = "";
     description.value = "";
     file.value = null;
-    fileError = null;
+    fileError.value = null;
   }
 };
 </script>
