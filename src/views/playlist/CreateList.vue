@@ -6,10 +6,12 @@ import useCollection from "@/composables/useCollection";
 import getUser from "@/composables/getUser";
 import { timestap } from "@/firebase/config";
 
+//define composable function
 const { filePath, url, uploadImage } = useStorage();
 const { error, addDoc } = useCollection("playlist");
 const { user } = getUser();
 
+//define refs
 const isPending = ref(false);
 const title = ref("");
 const description = ref("");
