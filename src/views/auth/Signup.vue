@@ -19,14 +19,63 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="w-full h-screen flex flex-col justify-center items-center">
-    <h1 class="text-2xl font-extrabold mb-3">Sign up</h1>
-    <form @submit.prevent="handleSubmit" class="w-1/3">
-      <input type="text" v-model="displayName" placeholder="Fullname" />
-      <input type="email" v-model="email" placeholder="Email" />
-      <input type="password" v-model="password" placeholder="Password" />
+  <div class="w-full h-screen flex flex-col mt-14 justify-start items-center">
+    <h1
+      class="font-extrabold tracking-wide text-4xl mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
+    >
+      Sign up
+    </h1>
+    <form
+      @submit.prevent="handleSubmit"
+      class="w-2/3 backdrop-filter backdrop-blur-sm bg-opacity-10 bg-black/10"
+    >
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="username"
+        >
+          Fullname
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="username"
+          v-model="displayName"
+          type="text"
+          required
+          placeholder="John"
+        />
+      </div>
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="username"
+        >
+          Email
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="username"
+          v-model="email"
+          type="text"
+          required
+          placeholder="john@doe.com"
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold" for="username">
+          Password
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="username"
+          v-model="password"
+          required
+          type="password"
+          placeholder="Password"
+        />
+      </div>
       <div class="flex justify-center items-center">
-        <button v-if="!isPending">Sign up</button>
+        <button class="bg-white px-8" v-if="!isPending">Sign up</button>
         <div v-else>
           <Spinner />
         </div>
