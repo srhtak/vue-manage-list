@@ -1,5 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import useStorage from "@/composables/useStorage";
+import Spinner from "@/components/Spinner.vue";
+import useCollection from "@/composables/useCollection";
+import getUser from "@/composables/getUser";
+import { timestap } from "@/firebase/config";
+
+const { filePath, url, uploadImage } = useStorage();
+const { error, addDoc, isPending } = useCollection("playlist");
+const { user } = getUser();
 
 const title = ref("");
 const description = ref("");
@@ -11,17 +20,35 @@ const types = ["image/png", "image/jpeg"];
 
 const handleFile = (e) => {
   const selected = e.target.files[0];
+  console.log(selected);
   if (selected && types.includes(selected.type)) {
     file.value = selected;
-    fileError.value = null;
-  } else {
-    fileError.value = "Please select an image file (png or jpeg)";
-    file.value = null;
+    fileError.value = "";
   }
 };
 
-const handleSubmit = () => {
-  console.log(title.value, description.value, file.value);
+const handleSubmit = async () => {
+  if (file.value) {
+    await uploadImage(file.value);
+    await addDoc({
+      title: title.value,
+      description: description.value,
+      userId: user.value.uid,
+      userName: user.value.displayName,
+      coverUrl: url.value,
+      filePath: filePath.value,
+      songs: [],
+      createdAt: timestap(),
+    });
+    if (!error.value) {
+      console.log("playlist added");
+    }
+    console.log("image uploaded, url:", url.value);
+    title.value = "";
+    description.value = "";
+    file.value = null;
+    fileError = null;
+  }
 };
 </script>
 
@@ -45,7 +72,7 @@ const handleSubmit = () => {
           v-model="title"
           type="text"
           required
-          placeholder="John"
+          placeholder="List Title"
         />
       </div>
       <div class="mb-4">
@@ -80,7 +107,12 @@ const handleSubmit = () => {
         </h2>
       </div>
       <div class="flex justify-center items-center">
-        <button class="bg-white hover:bg-gray-100 px-8">Create</button>
+        <button v-if="!isPending" class="bg-white hover:bg-gray-100 px-8">
+          Create
+        </button>
+        <div v-else>
+          <Spinner />
+        </div>
       </div>
     </form>
   </div>
