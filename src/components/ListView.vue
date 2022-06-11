@@ -1,31 +1,31 @@
 <script setup>
-const props = defineProps(["playlist"]);
+const props = defineProps(["playlists"]);
 </script>
 
 <template>
-  <a class="w-full" href="/products/basic-tee">
-    <div
-      class="shadow-[0_4px_0_0_rgba(0,0,0,1)] border-2 border-black rounded-3xl overflow-hidden"
-    >
-      <img
-        class="group-hover:scale-105 transition-transform duration-500 object-cover w-full h-[350px] sm:h-[450px]"
-        :src="playlist.coverUrl"
-        alt="Basic Tee Product"
-      />
+  <router-link
+    v-for="playlist in playlists"
+    :key="playlist.key"
+    to="/"
+    class="block overflow-hidden rounded-2xl shadow-lg"
+  >
+    <img class="object-cover w-full h-56" :src="playlist.coverUrl" />
+
+    <div class="p-4 bg-gray-900">
+      <p class="text-xs text-gray-500">{{ playlist.userName }}</p>
+
+      <h5 class="text-sm text-white">
+        {{ playlist.title }}
+      </h5>
+
+      <div class="flex justify-between">
+        <p class="mt-1 text-xs text-gray-500">
+          {{ playlist.description }}
+        </p>
+        <p class="text-green-400">Songs: {{ playlist.songs.length }}</p>
+      </div>
     </div>
-
-    <div class="relative pt-4">
-      <h3 class="text-sm group-hover:underline group-hover:underline-offset-4">
-        Basic Tee
-      </h3>
-
-      <p class="mt-2">
-        <span class="sr-only"> Regular Price </span>
-
-        <span class="font-medium tracking-wider"> £24.00 GBP </span>
-      </p>
-    </div>
-  </a>
+  </router-link>
 </template>
 
 <style lang="scss" scoped></style>

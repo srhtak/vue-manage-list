@@ -1,10 +1,6 @@
 <template>
-  <div
-    class="grid overflow-hidden grid-cols-2 grid-rows-2 gap-2"
-    v-for="doc in formattedList"
-    :key="doc.id"
-  >
-    <ListView :playlist="doc" />
+  <div class="grid grid-cols-3 gap-10 p-8">
+    <ListView :playlists="formattedList" />
   </div>
 </template>
 
