@@ -4,7 +4,6 @@ import useLogin from "@/composables/useLogin";
 import Spinner from "@/components/Spinner.vue";
 
 const { error, login, isPending } = useLogin();
-
 const email = ref("");
 const password = ref("");
 
