@@ -1,7 +1,7 @@
 import { ref, watchEffect } from "vue";
 import { projectFirestore } from "../firebase/config";
 
-const getDocuments = (collection, id) => {
+const getDocument = (collection, id) => {
   const document = ref(null);
   const error = ref(null);
 
@@ -30,4 +30,4 @@ const getDocuments = (collection, id) => {
   return { error, document };
 };
 
-export default getDocuments;
+export default getDocument;
