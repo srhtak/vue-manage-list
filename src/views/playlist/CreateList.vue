@@ -5,11 +5,13 @@ import Spinner from "@/components/Spinner.vue";
 import useCollection from "@/composables/useCollection";
 import getUser from "@/composables/getUser";
 import { timestap } from "@/firebase/config";
+import { useRouter } from "vue-router";
 
 //define composable function
 const { filePath, url, uploadImage } = useStorage();
 const { error, addDoc } = useCollection("playlist");
 const { user } = getUser();
+const router = useRouter();
 
 //define refs
 const isPending = ref(false);
@@ -34,7 +36,7 @@ const handleSubmit = async () => {
   if (file.value) {
     isPending.value = true;
     await uploadImage(file.value);
-    await addDoc({
+    const res = await addDoc({
       title: title.value,
       description: description.value,
       userId: user.value.uid,
@@ -46,7 +48,7 @@ const handleSubmit = async () => {
     });
     isPending.value = false;
     if (!error.value) {
-      console.log("playlist added");
+      router.push({ name: "ListDetail", params: { id: res.id } });
     }
     console.log("image uploaded, url:", url.value);
     title.value = "";

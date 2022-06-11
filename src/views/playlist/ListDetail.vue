@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Serhat Detail{{ id }}</h1>
+    <h1>Serhat Detail {{ id }}</h1>
   </div>
 </template>
 
