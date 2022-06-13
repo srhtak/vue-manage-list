@@ -33,13 +33,17 @@ import getDocument from "@/composables/getDocument";
 import Spinner from "@/components/Spinner.vue";
 import getUser from "@/composables/getUser";
 import useDocument from "@/composables/useDocument";
+import useStorage from "@/composables/useStorage";
+import { useRouter } from "vue-router";
 import { computed } from "vue";
 
 const props = defineProps(["id"]);
+const router = useRouter();
 
 const { user } = getUser();
 const { error, document: playlist } = getDocument("playlist", props.id);
 const { deleteDoc } = useDocument("playlist", props.id);
+const { deleteImage } = useStorage();
 
 const ownerShip = computed(() => {
   return (
@@ -48,7 +52,9 @@ const ownerShip = computed(() => {
 });
 
 const handleDelete = async () => {
+  await deleteImage(playlist.value.filePath);
   await deleteDoc();
+  router.push({ name: "Home" });
 };
 </script>
 
