@@ -17,11 +17,30 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
+import useDocument from "@/composables/useDocument";
+const props = defineProps(["playlist"]);
 
 const title = ref("");
 const artist = ref("");
 const showForm = ref(false);
+
+const { updateDoc } = useDocument("playlists", props.playlist.id);
+
+const handleSubmit = async () => {
+  const newSong = {
+    title: title.value,
+    artist: artist.value,
+    id: Math.floor(Math.random() * 1000000),
+  };
+
+  await updateDoc({
+    songs: [...props.playlist.songs, newSong],
+  });
+
+  title.value = "";
+  artist.value = "";
+};
 </script>
 
 <style lang="scss" scoped>

@@ -5,6 +5,7 @@ const props = defineProps(["playlists"]);
 <template>
   <div
     class="block overflow-hidden rounded-2xl shadow-lg"
+    v-auto-animate
     v-for="playlist in playlists"
     :key="playlist.id"
   >
