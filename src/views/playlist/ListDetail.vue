@@ -29,8 +29,8 @@ const handleDelete = async () => {
 };
 
 const deleteSong = async (id) => {
-  let filterSongs = playlist.value.songs.filter((song) => song.id !== id);
-  await updateDoc({ songs: [...filterSongs] });
+  const filterSongs = playlist.value.songs.filter((song) => song.id !== id);
+  await updateDoc({ songs: filterSongs });
 };
 </script>
 

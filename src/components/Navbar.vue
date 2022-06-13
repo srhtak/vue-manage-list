@@ -27,8 +27,8 @@ const handleLogout = async () => {
           <li>
             <router-link
               :to="{ name: 'Home' }"
-              aria-label="Our product"
-              title="Our product"
+              aria-label="Home"
+              title="Home"
               class="font-bold text-xl tracking-wide transition-colors duration-200 hover:text-teal-accent-400"
               >Playlist</router-link
             >
@@ -40,6 +40,15 @@ const handleLogout = async () => {
               title="Create"
               class="font-bold text-xl tracking-wide transition-colors duration-200 hover:text-teal-accent-400"
               >Create</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'UserList' }"
+              aria-label="User List"
+              title="Create"
+              class="font-bold text-xl tracking-wide transition-colors duration-200 hover:text-teal-accent-400"
+              >My List</router-link
             >
           </li>
         </ul>
