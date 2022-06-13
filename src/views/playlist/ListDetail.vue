@@ -41,8 +41,8 @@ const props = defineProps(["id"]);
 const router = useRouter();
 
 const { user } = getUser();
-const { error, document: playlist } = getDocument("playlist", props.id);
-const { deleteDoc } = useDocument("playlist", props.id);
+const { error, document: playlist } = getDocument("playlists", props.id);
+const { deleteDoc } = useDocument("playlists", props.id);
 const { deleteImage } = useStorage();
 
 const ownerShip = computed(() => {

@@ -9,7 +9,7 @@ import { useRouter } from "vue-router";
 
 //define composable function
 const { filePath, url, uploadImage } = useStorage();
-const { error, addDoc } = useCollection("playlist");
+const { error, addDoc } = useCollection("playlists");
 const { user } = getUser();
 const router = useRouter();
 

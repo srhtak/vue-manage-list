@@ -14,7 +14,7 @@ import { formatDistanceToNow } from "date-fns";
 import Spinner from "@/components/Spinner.vue";
 import ListView from "../components/ListView.vue";
 
-const { error, documents } = getCollection("playlist");
+const { error, documents } = getCollection("playlists");
 
 const formattedList = computed(() => {
   if (documents.value) {
