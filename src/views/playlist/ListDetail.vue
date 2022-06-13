@@ -21,6 +21,7 @@
     <!-- song list -->
     <div class="song-list">
       <p>song list here</p>
+      <AddSong v-if="ownerShip" :playlist="playlist" />
     </div>
   </div>
   <div v-else>
@@ -36,6 +37,7 @@ import useDocument from "@/composables/useDocument";
 import useStorage from "@/composables/useStorage";
 import { useRouter } from "vue-router";
 import { computed } from "vue";
+import AddSong from "../../components/addSong.vue";
 
 const props = defineProps(["id"]);
 const router = useRouter();
