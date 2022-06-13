@@ -1,3 +1,39 @@
+<script setup>
+import getDocument from "@/composables/getDocument";
+import Spinner from "@/components/Spinner.vue";
+import getUser from "@/composables/getUser";
+import useDocument from "@/composables/useDocument";
+import useStorage from "@/composables/useStorage";
+import { useRouter } from "vue-router";
+import { computed } from "vue";
+import AddSong from "../../components/addSong.vue";
+
+const props = defineProps(["id"]);
+const router = useRouter();
+
+const { user } = getUser();
+const { error, document: playlist } = getDocument("playlists", props.id);
+const { deleteDoc, updateDoc } = useDocument("playlists", props.id);
+const { deleteImage } = useStorage();
+
+const ownerShip = computed(() => {
+  return (
+    playlist.value && user.value && user.value.uid === playlist.value.userId
+  );
+});
+
+const handleDelete = async () => {
+  await deleteImage(playlist.value.filePath);
+  await deleteDoc();
+  router.push({ name: "Home" });
+};
+
+const deleteSong = async (id) => {
+  let filterSongs = playlist.value.songs.filter((song) => song.id !== id);
+  await updateDoc({ songs: [...filterSongs] });
+};
+</script>
+
 <template>
   <div class="error" v-if="error">{{ error }}</div>
   <div v-if="playlist" class="playlist-details m-8">
@@ -26,16 +62,18 @@
         v-for="song in playlist.songs"
         :key="song.id"
       >
-        <div class="flex justify-between items-center p-3">
-          <h2>{{ song.title }}</h2>
+        <div class="flex justify-between items-center p-1">
+          <div class="flex flex-col justify-start items-start p-3">
+            <h2 class="text-xl font-extrabold">{{ song.title }}</h2>
+            <h3 class="text-lg font-bold">{{ song.artist }}</h3>
+          </div>
           <button
-            @click=""
-            class="bg-red-300 text-white rounded-md shadow-xl px-2"
+            @click="deleteSong(song.id)"
+            class="bg-red-400 hover:bg-red-300 text-white rounded-md shadow-xl px-2 mr-2"
           >
             Delete
           </button>
         </div>
-        <h3>{{ song.artist }}</h3>
       </div>
       <AddSong v-if="ownerShip" :playlist="playlist" />
     </div>
@@ -44,37 +82,6 @@
     <Spinner />
   </div>
 </template>
-
-<script setup>
-import getDocument from "@/composables/getDocument";
-import Spinner from "@/components/Spinner.vue";
-import getUser from "@/composables/getUser";
-import useDocument from "@/composables/useDocument";
-import useStorage from "@/composables/useStorage";
-import { useRouter } from "vue-router";
-import { computed } from "vue";
-import AddSong from "../../components/addSong.vue";
-
-const props = defineProps(["id"]);
-const router = useRouter();
-
-const { user } = getUser();
-const { error, document: playlist } = getDocument("playlists", props.id);
-const { deleteDoc } = useDocument("playlists", props.id);
-const { deleteImage } = useStorage();
-
-const ownerShip = computed(() => {
-  return (
-    playlist.value && user.value && user.value.uid === playlist.value.userId
-  );
-});
-
-const handleDelete = async () => {
-  await deleteImage(playlist.value.filePath);
-  await deleteDoc();
-  router.push({ name: "Home" });
-};
-</script>
 
 <style>
 .playlist-details {
