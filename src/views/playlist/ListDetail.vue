@@ -9,6 +9,12 @@
       <h2 class="text-2xl text-blue-500">{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
       <p class="description">{{ playlist.description }}</p>
+      <button
+        v-if="ownerShip"
+        class="bg-red-500 mt-3 px-6 py-3 hover:bg-red-400 text-white rounded-md shadow-md"
+      >
+        Delete Playlist
+      </button>
     </div>
 
     <!-- song list -->
@@ -16,15 +22,27 @@
       <p>song list here</p>
     </div>
   </div>
+  <div v-else>
+    <Spinner />
+  </div>
 </template>
 
 <script setup>
 import getDocument from "@/composables/getDocument";
 import Spinner from "@/components/Spinner.vue";
+import getUser from "@/composables/getUser";
+import { computed } from "vue";
 
 const props = defineProps(["id"]);
 
+const { user } = getUser();
 const { error, document: playlist } = getDocument("playlist", props.id);
+
+const ownerShip = computed(() => {
+  return (
+    playlist.value && user.value && user.value.uid === playlist.value.userId
+  );
+});
 </script>
 
 <style>

@@ -2,8 +2,10 @@
 import { ref } from "vue";
 import useLogin from "@/composables/useLogin";
 import Spinner from "@/components/Spinner.vue";
+import { useRouter } from "vue-router";
 
 const { error, login, isPending } = useLogin();
+const router = useRouter();
 const email = ref("");
 const password = ref("");
 
@@ -12,6 +14,7 @@ const handleSubmit = async () => {
 
   if (!error.value) {
     console.log("user login");
+    router.push({ name: "Home" });
   } else {
     console.log(error.value);
   }

@@ -2,7 +2,9 @@
 import { ref } from "vue";
 import useSignup from "@/composables/useSignup";
 import Spinner from "@/components/Spinner.vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const { error, signup, isPending } = useSignup();
 
 const displayName = ref("");
@@ -13,6 +15,7 @@ const handleSubmit = async () => {
   await signup(email.value, password.value, displayName.value);
 
   if (!error.value) {
+    router.push({ name: "Home" });
     console.log("user sign up");
   }
 };
