@@ -19,8 +19,24 @@
     </div>
 
     <!-- song list -->
-    <div class="song-list">
-      <p>song list here</p>
+    <div v-auto-animate class="song-list">
+      <div
+        class="bg-white rounded-md m-2 shadow-lg flex flex-col justify-start"
+        v-auto-animate
+        v-for="song in playlist.songs"
+        :key="song.id"
+      >
+        <div class="flex justify-between items-center p-3">
+          <h2>{{ song.title }}</h2>
+          <button
+            @click=""
+            class="bg-red-300 text-white rounded-md shadow-xl px-2"
+          >
+            Delete
+          </button>
+        </div>
+        <h3>{{ song.artist }}</h3>
+      </div>
       <AddSong v-if="ownerShip" :playlist="playlist" />
     </div>
   </div>
