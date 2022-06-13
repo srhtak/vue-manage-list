@@ -2,7 +2,9 @@
 import { ref } from "vue";
 import useLogout from "@/composables/useLogout";
 import getUser from "@/composables/getUser";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const isMenuOpen = ref(false);
 const { error, logout } = useLogout();
 const { user } = getUser();
@@ -10,6 +12,7 @@ const { user } = getUser();
 const handleLogout = async () => {
   await logout();
   if (!error.value) {
+    router.push({ name: "Login" });
     console.log("logout");
   }
 };
