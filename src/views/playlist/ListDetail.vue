@@ -12,6 +12,7 @@
       <button
         v-if="ownerShip"
         class="bg-red-500 mt-3 px-6 py-3 hover:bg-red-400 text-white rounded-md shadow-md"
+        @click="handleDelete"
       >
         Delete Playlist
       </button>
@@ -31,18 +32,24 @@
 import getDocument from "@/composables/getDocument";
 import Spinner from "@/components/Spinner.vue";
 import getUser from "@/composables/getUser";
+import useDocument from "@/composables/useDocument";
 import { computed } from "vue";
 
 const props = defineProps(["id"]);
 
 const { user } = getUser();
 const { error, document: playlist } = getDocument("playlist", props.id);
+const { deleteDoc } = useDocument("playlist", props.id);
 
 const ownerShip = computed(() => {
   return (
     playlist.value && user.value && user.value.uid === playlist.value.userId
   );
 });
+
+const handleDelete = async () => {
+  await deleteDoc();
+};
 </script>
 
 <style>
